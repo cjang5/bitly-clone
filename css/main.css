@@ -1,0 +1,152 @@
+/* background image for shorten-page */
+.shorten-page {
+  
+}
+
+.section {
+  background: url(../assets/background-image.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
+/* navbar */
+nav {
+  padding: 20px 0px 20px 0px;
+  margin-top: 0px;
+/*  background: rgba(255, 0, 0, 0.25);*/
+}
+
+.navbar-logo {
+  margin-right: 3.5em !important;
+  margin-left: 8em !important;
+  /*background: blue;*/
+}
+
+.navbar-logo img {
+  height: 3em;
+}
+
+.nav-links span {
+  color: white !important;
+/*  background: blue;*/
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+  margin-left: 20px;
+}
+
+.shorten-page {
+  text-align: center;
+  color: white;
+}
+
+.shorten-page h1 {
+  font-size: 2.75em;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+/*  background: purple;*/
+  margin-top: 100px;
+}
+
+.shorten-page h2 {
+  font-size: 1.25em;
+  color: white;
+  font-family: "Varela Round", sans-serif;
+/*  background: green;*/
+  padding: 10px 0 10px 0;
+  margin-bottom: 20px;
+}
+
+.shorten-page .url-container {
+/*  background: blue;*/
+  margin-bottom: 100px;
+  padding: 30px 0 30px 0;
+}
+
+.shorten-page .url-bar {
+/*  background: red;*/
+  text-align: center;
+  padding: 0px;
+}
+
+.shorten-page .url-bar input {
+  min-height: 4em;
+  padding-left: 20px;
+  font-family: "Varela Round", sans-serif;
+  width: 82%;
+  display: inline-block;
+  border: none;
+  margin-right: -2px !important;
+  margin-left: 0px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.shorten-page .url-bar button {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 1em;
+  width: 18%;
+  height: 4em;
+  margin-left: -2px !important;
+  margin-right: 0px;
+  display: inline-block;
+  border: none;
+  background: #ee6123;
+  border-radius: 0px 3px 3px 0px;
+}
+
+.bitlinks-container {
+/*  background: orange;*/
+  margin-top: -140px;
+}
+
+.bitlinks-list {
+/*  background: green;*/
+  padding: 0px;
+}
+
+.bitlinks {
+/*  background: red;*/
+}
+
+.bitlink {
+  background: white;
+  padding: 25px 24px 25px 24px;
+  font-family: "Varela Round", sans-serif;
+}
+
+.bitlink-title a {
+  color: #444444;
+}
+.bitlink-title a:hover {
+  text-decoration: underline;
+}
+
+.long-url {
+/*  background: green;*/
+}
+
+.long-url a {
+  color: #9b9b9b;
+  font-size: 0.8em;
+}
+.long-url a:hover {
+  text-decoration: underline;
+}
+
+.bitlink-footer {
+  margin-top: 30px;
+/*  background: red;*/
+}
+
+.short-url a {
+  color: #ee6123;
+  font-size: 0.8em;
+}
+
+.hit-count a {
+  color: #9b9b9b;
+  font-size: 0.8em;
+}
+.hit-count a:hover {
+  text-decoration: underline;
+}
