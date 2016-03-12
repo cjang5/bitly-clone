@@ -1,3 +1,8 @@
+::selection {
+  background: #ee6123;
+  color: white;
+}
+
 /* background image for shorten-page */
 .shorten-page {
   
@@ -32,6 +37,7 @@ nav {
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   margin-left: 20px;
+  font-weight: bold;
 }
 
 .shorten-page {
@@ -45,6 +51,7 @@ nav {
   font-family: "Montserrat", sans-serif;
 /*  background: purple;*/
   margin-top: 100px;
+  font-weight: bold;
 }
 
 .shorten-page h2 {
@@ -74,10 +81,17 @@ nav {
   font-family: "Varela Round", sans-serif;
   width: 82%;
   display: inline-block;
-  border: none;
+  border-color: white;
+  box-shadow: none;
   margin-right: -2px !important;
   margin-left: 0px;
-  border-radius: 3px 0px 0px 3px;
+  border-radius: 4px 0px 0px 4px;
+}
+
+.shorten-page .url-bar input:focus {
+  border: 1px solid #ee6123;
+  background: #fcefe9;
+  color: #ee6123;
 }
 
 .shorten-page .url-bar button {
@@ -91,7 +105,7 @@ nav {
   display: inline-block;
   border: none;
   background: #ee6123;
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0px 4px 4px 0px;
 }
 
 .bitlinks-container {
@@ -138,15 +152,33 @@ nav {
 /*  background: red;*/
 }
 
+.short-url {
+  display: inline;
+}
+
 .short-url a {
   color: #ee6123;
   font-size: 0.8em;
 }
 
+.short-url-path {
+  font-weight: bold;
+}
+
+.hit-count {
+  display: inline;
+  float: right;
+}
 .hit-count a {
   color: #9b9b9b;
   font-size: 0.8em;
 }
 .hit-count a:hover {
   text-decoration: underline;
+}
+
+.hit-count a .click-icon {
+  height: 1.35em;
+  margin-bottom: -2px;
+  margin-left: 3px;
 }
