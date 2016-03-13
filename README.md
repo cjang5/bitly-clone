@@ -16,7 +16,7 @@ Just unzip the package I included, and in there you should see **api_key_include
 directory. Just go ahead and fill in the login and apiKey info there and it should work
 when you fire up the app.
 
-## The Good
+### The Good
 I managed to get a lot of features replicated like:
  + Highlighting the text form
  + Having the button say "COPY" when the contents of the url bar match the most
@@ -24,7 +24,7 @@ I managed to get a lot of features replicated like:
    we go back to saying "SHORTEN". (This one was annoying)
  + Pasting a link into the bar automatically triggers "shortening" behavior
 
-## The Bad
+### The Bad
  + So I kind of got some kind of persistent session thing going, although it is a bit
    shaky. I was struggling with asynchronous loading of the Bitlinks and so sometimes
    links won't appear on refresh, or will appear in the wrong order, so sorry about that!
