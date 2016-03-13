@@ -9,7 +9,7 @@
 }
 
 .section {
-  background: url(../assets/background-image.png);
+  background: url(http://res.cloudinary.com/dbxf5ysmu/image/upload/v1457829194/background-image_pxmofj.png);
   background-size: 100% auto;
   background-repeat: no-repeat;
 }
@@ -118,8 +118,14 @@ nav {
   padding: 0px;
 }
 
-.bitlinks {
-/*  background: red;*/
+.bitlinks li:first-child {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.bitlinks li:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .bitlink {

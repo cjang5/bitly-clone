@@ -41,7 +41,6 @@ var shortenUrl = function(longUrl) {
 
   var bitlink = null;
   bitlySDK.shorten(longUrl).then(function(result) {
-    console.log("kfdkf");
     // Get the bitlink in the form we want it
     bitlink = "bit.ly/" + result.hash;
 
@@ -120,14 +119,14 @@ var appendBitlink = function(url) {
       title = longUrl;
     
     var html =  "<div class='bitlink-title'>" + 
-                  "<a href='" + longUrl + "'>" + title + "</a>" +
+                  "<a href='https://" + longUrl + "' target='_blank'>" + title + "</a>" +
                 "</div>" + 
                 "<div class='long-url'>" +
                   "<a href='" + longUrl + "'>" + longUrl + "</a>" + 
                 "</div>" + 
                 "<div class='bitlink-footer'>" + 
                   "<div class='short-url'>" + 
-                    "<a href=''>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
+                    "<a>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
                   "</div>" + 
                   "<div class='hit-count'>" + 
                     "<a href=''>" +
@@ -138,8 +137,12 @@ var appendBitlink = function(url) {
             
     
     $("ul.bitlinks").prepend(
-      $("<li>").attr("class", "bitlink").append(html));
+      $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(300));
+    
+  
   }, 150);
+  
+  
 }
 
 //TEMP
@@ -160,12 +163,7 @@ $(".url-bar button").on("click", function() {
       $(".copy-success").fadeIn(300).delay(1500).fadeOut(300);
     }
     
-    
-    var $temp = $("<input>");
-    $("body").append($temp);
-    $temp.val(longUrl).select();
-    document.execCommand("copy");
-    $temp.remove();
+    copyToClipboard(longUrl);
     return;
   }
   
@@ -173,6 +171,11 @@ $(".url-bar button").on("click", function() {
   if (isValid(longUrl)) {
     // Call the helper to shorten the Url
     shortenUrl(longUrl);
+  }
+  else if (longUrl == "") {
+    if ($(".empty-url").css("display") == "none") {
+      $(".empty-url").fadeIn(300).delay(1500).fadeOut(300);
+    }
   }
   else {
     if ($(".shorten-failed").css("display") == "none") {
@@ -247,3 +250,22 @@ $(".url-bar input").keydown(function(e) {
   }
 });
 
+// Helper function to copy given text to user's clipboard
+var copyToClipboard = function(string) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val(string).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
+// When the user clicks on the orange Bitlink
+// we will copy it to their clipboard instead of navigating to 
+// the link
+$("body").on("click", "ul li .short-url a", function() {
+  var bitlink = "bit.ly/" + $(this).find("span").html();
+  copyToClipboard(bitlink);
+  if ($(".copy-success").css("display") == "none") {
+    $(".copy-success").fadeIn(300).delay(1500).fadeOut(300);
+  }
+});
