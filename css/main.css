@@ -8,6 +8,7 @@
 @font-face {
   font-family: 'Varela Round';
   src:    url(../assets/fonts/VarelaRound-Regular.ttf)    format('truetype'),
+          url(../assets/fonts/Varelaround-Regular.woff2)  format('woff2');
 }
 
 /* Change selection color to that of Bitly */
