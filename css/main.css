@@ -50,7 +50,7 @@ nav {
   color: white;
   font-family: "Montserrat", sans-serif;
 /*  background: purple;*/
-  margin-top: 100px;
+  margin-top: 110px;
   font-weight: bold;
 }
 
@@ -181,4 +181,16 @@ nav {
   height: 1.35em;
   margin-bottom: -2px;
   margin-left: 3px;
+}
+
+/* messages */
+.message {
+  display: none; 
+  width: 100%;
+  margin-left: 10px !important;
+}
+
+
+.message-body {
+  font-family: "Varela Round", sans-serif;
 }

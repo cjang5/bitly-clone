@@ -19,7 +19,7 @@
         <nav class="navbar">
           <div class="navbar-left">
             <div class="navbar-item navbar-logo">
-              <a href="/">
+              <a>
                 <img src="assets/oldlogo.svg">
               </a>
             </div>
@@ -45,6 +45,46 @@
             </div>
           </div>
         </nav>
+      
+      <div class="container" style="background:green;">
+        <div class="columns is-desktop" style="background:blue;">
+          <div class="column is-8 is-offset-2" style="position: absolute;padding:0px;">
+            <div class="message is-success copy-success " style="margin: auto;">
+              <div class="message-header">
+                Success
+              </div>
+              <div class="message-body">
+                Link successfully copied to clipboard!
+              </div>
+            </div>
+            <div class="message is-warning already-bitly">
+              <div class="message-header">
+                Oops!
+              </div>
+              <div class="message-body">
+                That is already a Bitly link.
+              </div>
+            </div>
+            <div class="message is-danger shorten-failed">
+              <div class="message-header">
+                Uh-oh...
+              </div>
+              <div class="message-body">
+                Unable to shorten that link. It is not a valid URL.
+              </div>
+            </div>
+            <div class="message is-warning empty-url">
+              <div class="message-header">
+                Oops!
+              </div>
+              <div class="message-body">
+                You forgot to paste a link!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="container">
         <div class="shorten-page image">
           <h1>SHORTEN. SHARE. MEASURE.</h1>

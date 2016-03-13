@@ -40,8 +40,8 @@ var shortenUrl = function(longUrl) {
   }
 
   var bitlink = null;
-
   bitlySDK.shorten(longUrl).then(function(result) {
+    console.log("kfdkf");
     // Get the bitlink in the form we want it
     bitlink = "bit.ly/" + result.hash;
 
@@ -57,9 +57,18 @@ var shortenUrl = function(longUrl) {
 
     shouldCopy = true;
     $(".url-bar button").html("COPY");
-    
+
     // append the bitlink
     appendBitlink(result.url);
+  }, 
+  function(error) {
+    // Error handling
+    // If the link submitted is already a Bitly link
+    if (error == "Error: 500 ALREADY_A_BITLY_LINK") {
+      if ($(".already-bitly").css("display") == "none") {
+        $(".already-bitly").fadeIn(300).delay(1500).fadeOut(300);
+      }
+    }
   });
 }
 
@@ -133,6 +142,11 @@ var appendBitlink = function(url) {
   }, 150);
 }
 
+//TEMP
+$(".navbar-logo").on("click", function() {
+  console.log($(".copy-success").css("display"));
+});
+
 // When the 'Shorten' button is clicked, shorten the URL
 $(".url-bar button").on("click", function() {
   // Get text
@@ -140,7 +154,13 @@ $(".url-bar button").on("click", function() {
   
   // If the button is supposed to copy, do that instead
   // Otherwise, proceed normally
-  if (shouldCopy) {
+  if (shouldCopy) {   
+    
+    if ($(".copy-success").css("display") == "none") {
+      $(".copy-success").fadeIn(300).delay(1500).fadeOut(300);
+    }
+    
+    
     var $temp = $("<input>");
     $("body").append($temp);
     $temp.val(longUrl).select();
@@ -155,6 +175,9 @@ $(".url-bar button").on("click", function() {
     shortenUrl(longUrl);
   }
   else {
+    if ($(".shorten-failed").css("display") == "none") {
+      $(".shorten-failed").fadeIn(300).delay(1500).fadeOut(300);
+    }
 //    console.log(longUrl + " is invalid!");
   }
 }); 
@@ -203,11 +226,11 @@ $(".url-bar input").on("input", function() {
   }
 });
 
-// This handler checks for when the url-bar is emptied
-// whether it be by manual backspacing or by
-// highlighting the contents and pressing backspace
-// Probably not the most elegant way, but it works for now
+// This handler behaves differently based on what key is pressed
+// while the url-bar input form is focused
 $(".url-bar input").keydown(function(e) {
+  // If backspace is pressed and the contents of the form
+  // are emptied, then we revert back to normal submit button status
   if (e.keyCode == 8) {
     setTimeout(function() {
       if ($(".url-bar input").val() == "") {
@@ -215,5 +238,12 @@ $(".url-bar input").keydown(function(e) {
         shouldCopy = false;
       }
     }, 4);
-  }  
+  }
+  
+  // If enter/return is pressed, then we simulate
+  // pressing the button
+  if (e.keyCode == 13) {
+    $(".url-bar button").click();
+  }
 });
+
