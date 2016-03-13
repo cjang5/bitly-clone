@@ -1,3 +1,22 @@
+// Check if sessionStorage is empty
+var previousUrls = JSON.parse(sessionStorage.getItem('previousUrls'));
+
+$(document).ready(function() {
+  if (previousUrls) {
+    // We will reload all the previous Bitlinks the user searched for
+    for (var i = 0; i < previousUrls.length; i++) {
+      console.log(previousUrls[i]);
+      console.log(typeof(previousUrls[i]));
+      
+      setTimeout(appendBitlink(previousUrls[i]), 1000);
+    }
+  }
+  else {
+    previousUrls = [];
+    console.log("No previous searches!");
+  }
+});
+
 // Let's start up the Bitly Interview SDK
 const bitlySDK = new BitlySDK({
   login: "jangerino",
@@ -59,6 +78,10 @@ var shortenUrl = function(longUrl) {
 
     // append the bitlink
     appendBitlink(result.url);
+    
+    // Store this link for persistent storage
+    previousUrls.push(result.url);
+    sessionStorage.setItem('previousUrls', JSON.stringify(previousUrls));
   }, 
   function(error) {
     // Error handling
@@ -137,7 +160,7 @@ var appendBitlink = function(url) {
             
     
     $("ul.bitlinks").prepend(
-      $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(300));
+      $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
     
   
   }, 150);

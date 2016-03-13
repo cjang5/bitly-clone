@@ -9,7 +9,7 @@
 }
 
 .section {
-  background: url(http://res.cloudinary.com/dbxf5ysmu/image/upload/v1457829194/background-image_pxmofj.png);
+  background: url(../assets/background-image.jpg);
   background-size: 100% auto;
   background-repeat: no-repeat;
 }
