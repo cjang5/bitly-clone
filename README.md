@@ -1,5 +1,5 @@
 #Bitly Front End Engineer Intern Exercise
-###Hello Bitly crew!
+*Hello Bitly crew!*
 
 ## Intro
 So, I had a **TON** of fun with this challenge, so thank you, first and foremost, for that.
