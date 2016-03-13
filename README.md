@@ -34,6 +34,7 @@ I managed to get a lot of features replicated like:
  + I also couldn't figure out how to add the 'X' link to clear the url-form.
 
 ### Notes
+ + I changed the background-image.png to a .jpg to increase load times
  + I couldn't find easy ways of replicating your guys' notification/copy-link-press-and-the-link-floats-up-and-fades mechanism
    so I used my own spin on it. I used Bulma's notification system to just fade in
    some nice little notifications with info for the user.
