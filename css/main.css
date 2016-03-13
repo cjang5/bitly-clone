@@ -1,11 +1,19 @@
+/* Fonts */
+@font-face {
+  font-family: 'Montserrat';
+  src:    url(../assets/fonts/Montserrat-Regular.ttf)    format('truetype'),
+          url(../assets/fonts/Montserrat-Regular.woff2)  format('woff2');
+}
+
+@font-face {
+  font-family: 'Varela Round';
+  src:    url(../assets/fonts/VarelaRound-Regular.ttf)    format('truetype'),
+}
+
+/* Change selection color to that of Bitly */
 ::selection {
   background: #ee6123;
   color: white;
-}
-
-/* background image for shorten-page */
-.shorten-page {
-  
 }
 
 .section {
@@ -18,13 +26,11 @@
 nav {
   padding: 20px 0px 20px 0px;
   margin-top: 0px;
-/*  background: rgba(255, 0, 0, 0.25);*/
 }
 
 .navbar-logo {
   margin-right: 3.5em !important;
   margin-left: 8em !important;
-  /*background: blue;*/
 }
 
 .navbar-logo img {
@@ -33,7 +39,6 @@ nav {
 
 .nav-links span {
   color: white !important;
-/*  background: blue;*/
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   margin-left: 20px;
@@ -49,7 +54,6 @@ nav {
   font-size: 2.75em;
   color: white;
   font-family: "Montserrat", sans-serif;
-/*  background: purple;*/
   margin-top: 110px;
   font-weight: bold;
 }
@@ -58,19 +62,16 @@ nav {
   font-size: 1.25em;
   color: white;
   font-family: "Varela Round", sans-serif;
-/*  background: green;*/
   padding: 10px 0 10px 0;
   margin-bottom: 20px;
 }
 
 .shorten-page .url-container {
-/*  background: blue;*/
   margin-bottom: 100px;
   padding: 30px 0 30px 0;
 }
 
 .shorten-page .url-bar {
-/*  background: red;*/
   text-align: center;
   padding: 0px;
 }
@@ -109,12 +110,10 @@ nav {
 }
 
 .bitlinks-container {
-/*  background: orange;*/
   margin-top: -130px;
 }
 
 .bitlinks-list {
-/*  background: green;*/
   padding: 0px;
 }
 
@@ -145,10 +144,6 @@ nav {
   text-decoration: underline;
 }
 
-.long-url {
-/*  background: green;*/
-}
-
 .long-url a {
   color: #9b9b9b;
   font-size: 0.8em;
@@ -159,7 +154,6 @@ nav {
 
 .bitlink-footer {
   margin-top: 20px;
-/*  background: red;*/
 }
 
 .short-url {

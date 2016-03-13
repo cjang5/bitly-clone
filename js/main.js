@@ -1,6 +1,16 @@
+// Let's start up the Bitly Interview SDK
+// I got 'myLogin' and 'myApiKey' from an external file
+// called 'api_key_include.js'
+const bitlySDK = new BitlySDK({
+  login: myLogin,
+  apiKey: myApiKey
+});
+
 // Check if sessionStorage is empty
 var previousUrls = JSON.parse(sessionStorage.getItem('previousUrls'));
 
+// We wrap these in document.ready so that appendBitlink
+// is available to use
 $(document).ready(function() {
   if (previousUrls) {
     // We will reload all the previous Bitlinks the user searched for
@@ -48,12 +58,6 @@ $(document).ready(function() {
   else {
     previousUrls = [];
   }
-});
-
-// Let's start up the Bitly Interview SDK
-const bitlySDK = new BitlySDK({
-  login: "jangerino",
-  apiKey: "R_8abd1ae125c742aab9e5350d28fcc6a7"
 });
 
 // Helper function to check if given string is has a protocol
@@ -248,6 +252,9 @@ $(".url-bar input").on("paste", function() {
   }, 4);
 });
 
+// Some handling for the url-bar, this is where we decide
+// whether the url-bar button should COPY or SHORTEN the contents
+// of the url-bar
 $(".url-bar input").on("input", function() {
   // if the user clears the url-bar, 'mostRecentBitlink' is reset
   if ($(this).val() == "") {
