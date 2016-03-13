@@ -8,8 +8,23 @@ $(document).ready(function() {
       console.log(previousUrls[i]);
       console.log(typeof(previousUrls[i]));
       
-      setTimeout(appendBitlink(previousUrls[i]), 1000);
+      appendBitlink(previousUrls[i], true);
+      
     }
+    var i = 1;
+    var loop = function() {
+      setTimeout(function() {
+        //console.log($("ul.bitlinks li:nth-child(" + i + ")").tagName);
+        $("ul.bitlinks li:nth-child(" + i + ")").fadeIn(400);
+        i++;
+        
+        if (i <= previousUrls.length) {
+          loop();
+        }
+      }, 300);
+    }
+    
+    loop();
   }
   else {
     previousUrls = [];
@@ -96,7 +111,7 @@ var shortenUrl = function(longUrl) {
 
 // Helper function that appends a new Bitlink item to the
 // List of Bitlinks that have already been created
-var appendBitlink = function(url) {
+var appendBitlink = function(url, hide) {
   // Variables to hold what info we will need about the bitlink
   var shortUrl = url.substring(7);
 //  console.log("SHORT URL: \"" + shortUrl + "\"");
@@ -158,9 +173,15 @@ var appendBitlink = function(url) {
                   "</div>" + 
                 "</div>";
             
+    if (hide) {
+      $("ul.bitlinks").prepend(
+        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeOut(400));
+    }
+    else {
+      $("ul.bitlinks").prepend(
+        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
+    }
     
-    $("ul.bitlinks").prepend(
-      $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
     
   
   }, 150);
@@ -170,7 +191,7 @@ var appendBitlink = function(url) {
 
 //TEMP
 $(".navbar-logo").on("click", function() {
-  console.log($(".copy-success").css("display"));
+  $("ul.bitlinks li:nth-child(1)").fadeIn(400);
 });
 
 // When the 'Shorten' button is clicked, shorten the URL
