@@ -3,28 +3,50 @@ var previousUrls = JSON.parse(sessionStorage.getItem('previousUrls'));
 
 $(document).ready(function() {
   if (previousUrls) {
+    //TEMP
+    console.log(previousUrls);
     // We will reload all the previous Bitlinks the user searched for
-    for (var i = 0; i < previousUrls.length; i++) {
-      console.log(previousUrls[i]);
-      console.log(typeof(previousUrls[i]));
+    // We will use $.Deferred to make sure they load in order
+    // of creation
+    var j = 0;
+    var appending;    
+    var temp = $.Deferred();
+    var loadBitlink = function() {
       
-      appendBitlink(previousUrls[i], true);
+      appending = $.Deferred();
       
-    }
-    var i = 1;
-    var loop = function() {
-      setTimeout(function() {
-        //console.log($("ul.bitlinks li:nth-child(" + i + ")").tagName);
-        $("ul.bitlinks li:nth-child(" + i + ")").fadeIn(400);
-        i++;
+      $.when(appending).done(function(msg) {
+        console.log(msg);
+        j++;
         
-        if (i <= previousUrls.length) {
-          loop();
+        if (j < previousUrls.length) {
+          loadBitlink();
         }
-      }, 300);
+        else {
+          temp.resolve();
+        }
+      });
+      
+      appending.resolve(appendBitlink(previousUrls[j], true));
     }
+    loadBitlink();
     
-    loop();
+    $.when(temp).done(function() {
+      var i = 1;
+      var showBitlink = function() {
+        
+        setTimeout(function() {
+          $("ul.bitlinks li:nth-child(" + i + ")").fadeIn(300);
+          i++;
+
+          if (i <= previousUrls.length) {
+            showBitlink();
+          }
+        }, 250);
+      }
+      showBitlink();
+    });
+    
   }
   else {
     previousUrls = [];
@@ -68,9 +90,7 @@ var shouldCopy = false;
 var shortenUrl = function(longUrl) {
   // Make sure longUrl has a protocol
   if (!hasProtocol(longUrl)) {
-//    console.log("Changing URL..."); //TEMP
     longUrl = "http://" + longUrl;
-//    console.log("Fixed to: " + longUrl); // TEMP
   }
 
   var bitlink = null;
@@ -80,9 +100,6 @@ var shortenUrl = function(longUrl) {
 
     // This Bitlink is now the most recently created one
     mostRecentBitlink = bitlink;
-
-//    console.log(result);
-//    console.log("Bitlink: " + bitlink);
 
     // Change the text to the newly created Bitlink and highlight it
     $(".url-bar input").val(bitlink);
@@ -114,18 +131,17 @@ var shortenUrl = function(longUrl) {
 var appendBitlink = function(url, hide) {
   // Variables to hold what info we will need about the bitlink
   var shortUrl = url.substring(7);
-//  console.log("SHORT URL: \"" + shortUrl + "\"");
   
-  var title = null;
+  var getTitle = $.Deferred();
   bitlySDK.info(url).then(function(result) {
-//    console.log(result);
-    title = result.title;
+     getTitle.resolve(result.title);
   });
   
-  var longUrl = null;
+  
+  var getLongUrl = $.Deferred();
   bitlySDK.expand(url).then(function(result) {
-    longUrl = result.long_url;
-    
+    var longUrl = result.long_url;
+
     // Trim the longUrl
     if (longUrl.indexOf("http://www.") > -1) {
       longUrl = longUrl.substring(11);
@@ -139,59 +155,91 @@ var appendBitlink = function(url, hide) {
     else {
       longUrl = longUrl.substring(7);
     }
+    
+    getLongUrl.resolve(longUrl);
   });
   
-  var hitCount = 0;
+  var getClicks = $.Deferred();
   bitlySDK.clicks([url]).then(function(result) {
-//    console.log(result);
-    hitCount = result[0].global_clicks;
+    getClicks.resolve(result[0].global_clicks);
   });
   
-  setTimeout(function() {
-//    console.log("FINAL");
-//    console.log("Title: " + title);
-//    console.log("Long URL: " + longUrl);
-//    console.log("Short URL: " + shortUrl);
-//    console.log("Clicks: " + hitCount);
-    if (title == null)
-      title = longUrl;
+  $.when(getTitle, getLongUrl, getClicks)
+    .done(function(title, longUrl, clicks) {
+//      console.log("FINISHED\n" + "TITLE: " + title +
+//                  "LONG URL: " + longUrl + 
+//                  "CLICKS: " + clicks);
+      if (title == null) {
+        title = longUrl;
+      }
     
-    var html =  "<div class='bitlink-title'>" + 
-                  "<a href='https://" + longUrl + "' target='_blank'>" + title + "</a>" +
-                "</div>" + 
-                "<div class='long-url'>" +
-                  "<a href='" + longUrl + "'>" + longUrl + "</a>" + 
-                "</div>" + 
-                "<div class='bitlink-footer'>" + 
-                  "<div class='short-url'>" + 
-                    "<a>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
+      var html =  "<div class='bitlink-title'>" + 
+                    "<a href='https://" + longUrl + "' target='_blank'>" + title + "</a>" +
                   "</div>" + 
-                  "<div class='hit-count'>" + 
-                    "<a href=''>" +
-                      "<span>" + hitCount + "</span><img class='click-icon' src='assets/click-icon.svg'>" + 
-                    "</a>" + 
+                  "<div class='long-url'>" +
+                    "<a href='" + longUrl + "'>" + longUrl + "</a>" + 
                   "</div>" + 
-                "</div>";
-            
-    if (hide) {
-      $("ul.bitlinks").prepend(
-        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeOut(400));
-    }
-    else {
-      $("ul.bitlinks").prepend(
-        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
-    }
-    
-    
+                  "<div class='bitlink-footer'>" + 
+                    "<div class='short-url'>" + 
+                      "<a>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
+                    "</div>" + 
+                    "<div class='hit-count'>" + 
+                      "<a href=''>" +
+                        "<span>" + clicks + "</span><img class='click-icon' src='assets/click-icon.svg'>" + 
+                      "</a>" + 
+                    "</div>" + 
+                  "</div>" +
+                  "<hr class='divider'>";
+
+      if (hide) {
+        $("ul.bitlinks").prepend(
+          $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeOut(400));
+      }
+      else {
+        $("ul.bitlinks").prepend(
+          $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
+      }
+    });
   
-  }, 150);
+//  setTimeout(function() {
+//    if (title == null)
+//      title = longUrl;
+//    
+//    var html =  "<div class='bitlink-title'>" + 
+//                  "<a href='https://" + longUrl + "' target='_blank'>" + title + "</a>" +
+//                "</div>" + 
+//                "<div class='long-url'>" +
+//                  "<a href='" + longUrl + "'>" + longUrl + "</a>" + 
+//                "</div>" + 
+//                "<div class='bitlink-footer'>" + 
+//                  "<div class='short-url'>" + 
+//                    "<a>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
+//                  "</div>" + 
+//                  "<div class='hit-count'>" + 
+//                    "<a href=''>" +
+//                      "<span>" + hitCount + "</span><img class='click-icon' src='assets/click-icon.svg'>" + 
+//                    "</a>" + 
+//                  "</div>" + 
+//                "</div>" +
+//                "<hr class='divider'>";
+//            
+//    if (hide) {
+//      $("ul.bitlinks").prepend(
+//        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeOut(400));
+//    }
+//    else {
+//      $("ul.bitlinks").prepend(
+//        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
+//    }
+//  
+//  }, 10);
   
-  
+  return "Done with " + url;
 }
 
 //TEMP
 $(".navbar-logo").on("click", function() {
-  $("ul.bitlinks li:nth-child(1)").fadeIn(400);
+  $("ul.bitlinks li:nth-child(2)").css("background", "blue");
 });
 
 // When the 'Shorten' button is clicked, shorten the URL

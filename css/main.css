@@ -110,7 +110,7 @@ nav {
 
 .bitlinks-container {
 /*  background: orange;*/
-  margin-top: -140px;
+  margin-top: -130px;
 }
 
 .bitlinks-list {
@@ -126,6 +126,10 @@ nav {
 .bitlinks li:last-child {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+
+.bitlinks li:last-child hr {
+  display: none;
 }
 
 .bitlink {
@@ -154,7 +158,7 @@ nav {
 }
 
 .bitlink-footer {
-  margin-top: 30px;
+  margin-top: 20px;
 /*  background: red;*/
 }
 
@@ -187,6 +191,12 @@ nav {
   height: 1.35em;
   margin-bottom: -2px;
   margin-left: 3px;
+}
+
+hr.divider {
+  border-color: rgba(0, 0, 0, 0.1);
+  margin-bottom: -25px;
+  margin-top: 24px;
 }
 
 /* messages */
