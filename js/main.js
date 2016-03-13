@@ -3,8 +3,6 @@ var previousUrls = JSON.parse(sessionStorage.getItem('previousUrls'));
 
 $(document).ready(function() {
   if (previousUrls) {
-    //TEMP
-    console.log(previousUrls);
     // We will reload all the previous Bitlinks the user searched for
     // We will use $.Deferred to make sure they load in order
     // of creation
@@ -15,8 +13,7 @@ $(document).ready(function() {
       
       appending = $.Deferred();
       
-      $.when(appending).done(function(msg) {
-        console.log(msg);
+      $.when(appending).done(function() {
         j++;
         
         if (j < previousUrls.length) {
@@ -50,7 +47,6 @@ $(document).ready(function() {
   }
   else {
     previousUrls = [];
-    console.log("No previous searches!");
   }
 });
 
@@ -166,9 +162,6 @@ var appendBitlink = function(url, hide) {
   
   $.when(getTitle, getLongUrl, getClicks)
     .done(function(title, longUrl, clicks) {
-//      console.log("FINISHED\n" + "TITLE: " + title +
-//                  "LONG URL: " + longUrl + 
-//                  "CLICKS: " + clicks);
       if (title == null) {
         title = longUrl;
       }
@@ -184,7 +177,7 @@ var appendBitlink = function(url, hide) {
                       "<a>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
                     "</div>" + 
                     "<div class='hit-count'>" + 
-                      "<a href=''>" +
+                      "<a href='https://" + longUrl + "' target='_blank'>" +
                         "<span>" + clicks + "</span><img class='click-icon' src='assets/click-icon.svg'>" + 
                       "</a>" + 
                     "</div>" + 
@@ -200,47 +193,7 @@ var appendBitlink = function(url, hide) {
           $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
       }
     });
-  
-//  setTimeout(function() {
-//    if (title == null)
-//      title = longUrl;
-//    
-//    var html =  "<div class='bitlink-title'>" + 
-//                  "<a href='https://" + longUrl + "' target='_blank'>" + title + "</a>" +
-//                "</div>" + 
-//                "<div class='long-url'>" +
-//                  "<a href='" + longUrl + "'>" + longUrl + "</a>" + 
-//                "</div>" + 
-//                "<div class='bitlink-footer'>" + 
-//                  "<div class='short-url'>" + 
-//                    "<a>bit.ly/<span class='short-url-path'>" + shortUrl.substring(7) + "</span></a>" +
-//                  "</div>" + 
-//                  "<div class='hit-count'>" + 
-//                    "<a href=''>" +
-//                      "<span>" + hitCount + "</span><img class='click-icon' src='assets/click-icon.svg'>" + 
-//                    "</a>" + 
-//                  "</div>" + 
-//                "</div>" +
-//                "<hr class='divider'>";
-//            
-//    if (hide) {
-//      $("ul.bitlinks").prepend(
-//        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeOut(400));
-//    }
-//    else {
-//      $("ul.bitlinks").prepend(
-//        $("<li>").attr("class", "bitlink").attr("style", "display:none;").append(html).fadeIn(400));
-//    }
-//  
-//  }, 10);
-  
-  return "Done with " + url;
 }
-
-//TEMP
-$(".navbar-logo").on("click", function() {
-  $("ul.bitlinks li:nth-child(2)").css("background", "blue");
-});
 
 // When the 'Shorten' button is clicked, shorten the URL
 $(".url-bar button").on("click", function() {
@@ -273,7 +226,6 @@ $(".url-bar button").on("click", function() {
     if ($(".shorten-failed").css("display") == "none") {
       $(".shorten-failed").fadeIn(300).delay(1500).fadeOut(300);
     }
-//    console.log(longUrl + " is invalid!");
   }
 }); 
 
@@ -288,13 +240,10 @@ $(".url-bar input").on("paste", function() {
     
     // if URL is valid, we'll shorten it
     if (isValid(longUrl)) {
-//      console.log(longUrl + " is valid!");
-      
       // Call the helper to shorten the Url
       shortenUrl(longUrl);
     }
     else {
-//      console.log(longUrl + " is invalid!");
     }
   }, 4);
 });
@@ -309,13 +258,11 @@ $(".url-bar input").on("input", function() {
   // Otherwise, we check if the url-bar's content is
   // the mostRecentBitlink
   if ($(this).val() == mostRecentBitlink) {
-//    console.log("Still there!");
     // Button should say copy
     shouldCopy = true;
     $(".url-bar button").html("COPY");
   }
   else {
-//    console.log("SHORTEN" + mostRecentBitlink);
     shouldCopy = false;
     $(".url-bar button").html("SHORTEN");
   }
